@@ -8,7 +8,7 @@
     <p> Content <input name="Content"></p>
 {% for tag in tags %}
 <br>
-<input type="checkbox" name="CurrentTag">{{tag.name}}
+<input type="checkbox" name="CurrentTag" value="{{tag.id}}">{{tag.name}}
 {% endfor %}
 <br>
 <br>

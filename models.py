@@ -51,6 +51,12 @@ class Post(db.Model):
 
     users = db.relationship('User', backref='posts')
 
+    tags = db.relationship('Tag',
+                           secondary='posttags',
+                           backref='posts')
+
+    posttags = db.relationship('PostTag', backref='posts')
+
 
 class Tag(db.Model):
     """Tag"""
@@ -63,10 +69,7 @@ class Tag(db.Model):
     name = db.Column(db.String(20),
                      nullable=False,
                      unique=True)
-
-    posts = db.relationship('Post',
-                            secondary='posttags',
-                            backref='tags')
+    posttags = db.relationship('PostTag', backref='tags')
 
 
 class PostTag(db.Model):
@@ -79,6 +82,3 @@ class PostTag(db.Model):
 
     tag_id = db.Column(db.Integer, db.ForeignKey('tags.id'),
                        primary_key=True)
-
-    tags = db.relationship('Tag', backref='posttags')
-    posts = db.relationship('Post', backref='posttags')

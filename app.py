@@ -85,11 +85,12 @@ def create_post(user_id):
     user_id = user_id
     title = request.form['Title']
     content = request.form['Content']
-    # tagsAdded = request.form.getlist('CurrentTag')
-
-    post = Post(title=title, content=content, user_id=user_id)
+    tagsAdded = [int(num) for num in request.form.getlist('CurrentTag')]
+    tags = Tag.query.filter(Tag.id.in_(tagsAdded)).all()
+    post = Post(title=title, content=content, user_id=user_id, tags=tags)
     db.session.add(post)
     db.session.commit()
+    print("My post has tags!!: ", post.tags)
 
     return redirect(f"/users/{user_id}")
 
